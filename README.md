@@ -1,5 +1,5 @@
 
-![https://img.shields.io/badge/node-%3E%3D6.0.0-brightgreen.svg] ![https://img.shields.io/badge/vue-2.5.2-brightgreen.svg]
+![node](https://img.shields.io/badge/node-%3E%3D6.0.0-brightgreen.svg) ![vue](https://img.shields.io/badge/vue-2.5.2-brightgreen.svg)
 # music-app
 
 > 慕课vue音乐App
