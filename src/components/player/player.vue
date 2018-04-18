@@ -96,7 +96,7 @@
 <script type="text/ecmascript-6">
 import animations from 'create-keyframe-animation';
 import Lyric from 'lyric-parser';
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { prefixStyle } from 'common/js/dom';
 import { playMode } from 'common/js/config';
 import { playerMixin } from 'common/js/mixin';
@@ -246,6 +246,7 @@ export default {
       if (this.currentLyric && !this.isPureMusic) {
         this.currentLyric.seek(this.currentTime * 1000);
       }
+      this.savePlayHistory(this.currentSong);
     },
     paused () {
       this.setPlayingState(false);
@@ -486,7 +487,10 @@ export default {
     },
     ...mapMutations({
       setFullScreen: 'SET_FULL_SCREEN'
-    })
+    }),
+    ...mapActions([
+      'savePlayHistory'
+    ])
   },
   watch: {
     currentSong (newSong, oldSong) {
