@@ -1,7 +1,7 @@
 <template>
   <div class="search-list" v-show="searches.length">
       <transition-group name="list" tag="ul">
-        <li @click="selectItem(item)" class="search-item" v-for="(item, index) in searches" :key="index">
+        <li @click="selectItem(item)" class="search-item" v-for="item in searches" :key="item">
           <span class="text">{{item}}</span>
           <span class="icon" @click.stop="deleteOnde(item)">
             <i class="icon-delete"></i>
@@ -45,7 +45,7 @@ export default {
     height 40px
     overflow hidden
     &.list-enter-active, &.list-leave-active
-      transition all 0.1s
+      transition all 0.1s linear
     &.list-enter, &.list-leave-to
       height 0
     .text

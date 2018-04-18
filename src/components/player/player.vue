@@ -83,11 +83,12 @@
             <i :class="miniIcon" class="icon-mini" @click.stop="togglePlaying"></i>
           </progressCircle>
         </div>
-        <div class="control">
+        <div class="control" @click.stop="showPlaylist">
           <i class="icon-playlist"></i>
         </div>
       </div>
     </transition>
+    <playlist ref="playlist"></playlist>
     <audio ref="audio" @playing="ready" @error="error" @timeupdate="timeupdate" @ended="end" @paused="paused"></audio>
   </div>
 </template>
@@ -98,11 +99,12 @@ import Lyric from 'lyric-parser';
 import { mapGetters, mapMutations } from 'vuex';
 import { prefixStyle } from 'common/js/dom';
 import { playMode } from 'common/js/config';
-import { shuffle } from 'common/js/util';
+import { playerMixin } from 'common/js/mixin';
 
 import progressBar from 'base/progressBar/progressBar';
 import progressCircle from 'base/progressCircle/progressCircle';
 import scroll from 'base/scroll/scroll';
+import playlist from 'components/playlist/playlist';
 
 const TRANSFORM = prefixStyle('transform');
 const TRANSITION_DURATION = prefixStyle('transitionDuration');
@@ -110,6 +112,7 @@ const TRANSITION_DURATION = prefixStyle('transitionDuration');
 const timeExp = /\[(\d{2}):(\d{2}):(\d{2})]/g;
 
 export default {
+  mixins: [playerMixin],
   data () {
     return {
       songReady: false,
@@ -127,7 +130,8 @@ export default {
   components: {
     progressBar,
     progressCircle,
-    scroll
+    scroll,
+    playlist
   },
   created () {
     this.rotateCd = 0;
@@ -150,17 +154,10 @@ export default {
     percent () {
       return this.currentTime / this.currentSong.duration;
     },
-    iconMode () {
-      return this.mode === playMode.sequence ? 'icon-sequence' : this.mode === playMode.loop ? 'icon-loop' : 'icon-random';
-    },
     ...mapGetters([
       'fullScreen',
-      'playlist',
-      'currentSong',
       'playing',
-      'currentIndex',
-      'mode',
-      'sequenceList'
+      'currentIndex'
     ])
   },
   methods: {
@@ -351,18 +348,6 @@ export default {
       this.$refs.lyricList.$el.style[TRANSITION_DURATION] = `${time}ms`;
       this.touch.initiated = false;
     },
-    changeMode () {
-      const mode = (this.mode + 1) % 3;
-      this.setPlayMode(mode);
-      let list = null;
-      if (mode === playMode.random) {
-        list = shuffle(this.sequenceList);
-      } else {
-        list = this.sequenceList;
-      }
-      this._resetCurrentIndex(list);
-      this.setPlaylist(list);
-    },
     enter (el, done) {
       const { x, y, scale } = this._getPosAndStyle();
 
@@ -403,6 +388,9 @@ export default {
       this.$refs.cdWrapper.style.transition = '';
       this.$refs.cdWrapper.style[TRANSFORM] = '';
     },
+    showPlaylist () {
+      this.$refs.playlist.show();
+    },
     _getPosAndStyle () {
       const targetWidth = 40;
       const paddingLeft = 40;
@@ -435,12 +423,6 @@ export default {
     _resetAnimation () {
       this.$refs.cdImage.style['animation-delay'] = '';
       this.$refs.miniImage.style['animation-delay'] = '';
-    },
-    _resetCurrentIndex (list) {
-      let index = list.findIndex((item) => {
-        return item.id === this.currentSong.id;
-      });
-      this.setCurrentIndex(index);
     },
     _pad (num, n = 2) {
       let len = num.toString().length;
@@ -503,11 +485,7 @@ export default {
       imageWrapper.style[TRANSFORM] = wTransform === 'none' ? iTransform : iTransform.concat(' ', wTransform);
     },
     ...mapMutations({
-      setFullScreen: 'SET_FULL_SCREEN',
-      setPlayingState: 'SET_PLAYING_STATE',
-      setCurrentIndex: 'SET_CURRENT_INDEX',
-      setPlayMode: 'SET_PLAY_MODE',
-      setPlaylist: 'SET_PLAYLIST'
+      setFullScreen: 'SET_FULL_SCREEN'
     })
   },
   watch: {
