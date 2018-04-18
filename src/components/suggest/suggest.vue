@@ -58,6 +58,9 @@ export default {
     }
   },
   methods: {
+    refresh () {
+      this.$refs.suggest.refresh();
+    },
     listScroll () {
       this.$emit('listScroll');
     },
@@ -88,6 +91,7 @@ export default {
       } else {
         this.insertSong(item);
       }
+      this.$emit('select');
     },
     _search () {
       this.page = 1;
@@ -194,7 +198,7 @@ export default {
       color $color-text-d
       overflow hidden
       .text
-        no-wrao()
+        no-wrap()
   .no-result-wrapper
     position absolute
     width 100%
