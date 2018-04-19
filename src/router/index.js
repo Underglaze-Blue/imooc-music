@@ -8,6 +8,7 @@ const Rank = () => import('components/rank/rank');
 const singerDetail = () => import('components/singerDetail/singerDetail');
 const disc = () => import('components/disc/disc');
 const TopList = () => import('components/topList/topList');
+const userCenter = () => import('components/userCenter/userCenter');
 
 Vue.use(Router);
 
@@ -55,6 +56,11 @@ let routes = [
         component: TopList
       }
     ]
+  },
+  {
+    path: '/user',
+    name: userCenter,
+    component: userCenter
   },
   {
     path: '/',
