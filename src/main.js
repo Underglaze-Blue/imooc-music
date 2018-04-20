@@ -10,6 +10,11 @@ import VueLazyLoad from 'vue-lazyload';
 
 import 'common/stylus/index.styl';
 
+/* eslint-disable no-unused-vars */
+import vConsole from 'vconsole'; // 移动端调试
+
+// console.log('text');
+
 fastClick.attach(document.body);
 Vue.prototype.$http = axios;
 Vue.config.productionTip = false;
