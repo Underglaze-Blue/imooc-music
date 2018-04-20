@@ -11,7 +11,7 @@ import VueLazyLoad from 'vue-lazyload';
 import 'common/stylus/index.styl';
 
 /* eslint-disable no-unused-vars */
-import vConsole from 'vconsole'; // 移动端调试
+// import vConsole from 'vconsole'; // 移动端调试
 
 // console.log('text');
 
