@@ -3,8 +3,8 @@
     <transition name="normal" @enter="enter" @after-enter="afterEnter" @leave="leave" @after-leave="afterLeave">
       <!-- <div class="normal-player" :style="{visibility : fullScreen ? 'visible' : 'hidden'}"> -->
       <div class="normal-player" v-show="fullScreen">
-        <div class="background">
-          <img :src="currentSong.image">
+        <div class="background" ref="background">
+          <!-- <img :src="currentSong.image"> -->
         </div>
         <div class="top">
           <div class="back" @click="back">
@@ -510,6 +510,9 @@ export default {
       this.$refs.audio.src = newSong.url;
       this.$refs.audio.play();
       this._resetAnimation();
+      this.$refs.background.style['background-image'] = `url(${this.currentSong.image})`;
+      this.$refs.background.style['background-position'] = 'center center';
+      this.$refs.background.style['background-size'] = 'cover';
       // 若歌曲 5s 未播放，则认为超时，修改状态确保可以切换歌曲。
       clearTimeout(this.timer);
       this.timer = setTimeout(() => {
@@ -570,10 +573,10 @@ export default {
       height 100%
       z-index -1
       opacity 0.6
-      filter blur(20px)
-      img
-        width 100%
-        height 100%
+      filter blur(30px)
+      // img
+      //   width 100%
+      //   height 100%
     .top
       position relative
       margin-bottom 25px
