@@ -511,8 +511,6 @@ export default {
       this.$refs.audio.play();
       this._resetAnimation();
       this.$refs.background.style['background-image'] = `url(${this.currentSong.image})`;
-      this.$refs.background.style['background-position'] = 'center center';
-      this.$refs.background.style['background-size'] = 'cover';
       // 若歌曲 5s 未播放，则认为超时，修改状态确保可以切换歌曲。
       clearTimeout(this.timer);
       this.timer = setTimeout(() => {
@@ -574,6 +572,8 @@ export default {
       z-index -1
       opacity 0.3
       filter blur(30px)
+      background-position center center
+      background-size cover
       // img
       //   width 100%
       //   height 100%
