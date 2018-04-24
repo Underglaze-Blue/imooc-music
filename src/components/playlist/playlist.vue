@@ -78,17 +78,13 @@ export default {
     },
     selectItem (item, index) {
       if (this.mode === playMode.random) {
-        index = this.playlist.findIndex((song) => {
-          return song.id === item.id;
-        });
+        index = this.playlist.findIndex(song => song.id === item.id);
       }
       this.setCurrentIndex(index);
       this.setPlayingState(true);
     },
     scrollToCurrent (current) {
-      const index = this.sequenceList.findIndex((song) => {
-        return current.id === song.id;
-      });
+      const index = this.sequenceList.findIndex(song => song.id === current.id);
       this.$refs.listContent.scrollToElement(this.$refs.listItem[index], 300);
     },
     deleteOne (item) {

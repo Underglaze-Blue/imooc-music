@@ -53,9 +53,10 @@ export const playerMixin = {
       this.setPlaylist(list);
     },
     _resetCurrentIndex (list) {
-      let index = list.findIndex((item) => {
-        return item.id === this.currentSong.id;
-      });
+      // let index = list.findIndex((item) => {
+      //   return item.id === this.currentSong.id;
+      // });
+      let index = list.findIndex(item => item.id === this.currentSong.id);
       this.setCurrentIndex(index);
     },
     getFavoriteIcon (song) {
@@ -65,9 +66,10 @@ export const playerMixin = {
       this.isFavorite(song) ? this.deleteFavoriteList(song) : this.saveFavoriteList(song);
     },
     isFavorite (song) {
-      const index = this.favoriteList.findIndex((item) => {
-        return item.id === song.id;
-      });
+      // const index = this.favoriteList.findIndex((item) => {
+      //   return item.id === song.id;
+      // });
+      const index = this.favoriteList.findIndex(item => item.id === song.id);
       return index > -1;
     },
     ...mapMutations({
