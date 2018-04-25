@@ -1,6 +1,6 @@
 <template>
   <div class="loading">
-    <img src="./loading.gif" width="200" height="100"/>
+    <img src="./loading.gif" width="100" height="50"/>
     <p class="desc">{{title}}</p>
   </div>
 </template>
